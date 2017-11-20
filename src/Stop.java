@@ -5,27 +5,6 @@ public class Stop {
     //private final int geolocation;
     //private final int oneBusAwayID;
 
-    public class Pair <Bus, Integer> {
-        public Bus bus;
-        public Integer time;
-        public Pair(){
-            this.bus = null;
-            this.time = null;
-        }
-        public Pair(Bus bus, Integer time){
-            this.bus = bus;
-            this.time = time;
-        }
-
-        public void setBus(Bus b){
-            this.bus = b;
-        }
-
-        public void setTime(Integer t){
-            this.time = t;
-        }
-    }
-
 
     private class PairComparator implements Comparator<Pair<Bus, Integer>>{
         public int compare(Pair<Bus, Integer> pair1, Pair<Bus, Integer> pair2) {
@@ -45,7 +24,13 @@ public class Stop {
     }
     public void addPair(Bus bus, Integer time) {this.queue.add(new Pair(bus, time));}
     public void addBus(Bus bus){buses.add(bus);}
-    public Boolean stopAt(Bus bus){
+    public ArrayList<Bus> getBuses(){return this.buses;}
+    public Pair<Bus, Integer> getArrival(){
+        Pair<Bus, Integer> pair = queue.peek();
+        queue.remove(pair);
+        return pair;
+    }
+    public Boolean stopsAt(Bus bus){
         if(buses.indexOf(bus) == -1) {
             return false;
         }else{

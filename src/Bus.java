@@ -8,6 +8,7 @@ public class Bus {
     public void addStop(Stop stop){
         stops.add(stop);
     }
+    public ArrayList<Stop> getStops(){ return this.stops; }
     public Boolean stopAt(Stop stop){
         if(stops.indexOf(stop) == -1) {
             return false;

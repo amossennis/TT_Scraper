@@ -100,7 +100,15 @@ public class ShuttleScraper{
     }
 
     public void printSchedule(){
-
+        for(int index = 0; index < buses.size(); index++){
+            Bus bus = buses.get(index);
+            ArrayList<Stop> stops = bus.getStops();
+            for(int i = 0; i < stops.size(); i++){
+                Stop stop = stops.get(i);
+                Pair<Bus, Integer> pair = stop.getArrival();
+                System.out.println("Bus will arrive in: " + pair.time + " minutes.");
+            }
+        }
     }
     public static void main(String[] args) throws IOException {
         ShuttleScraper s = new ShuttleScraper();
