@@ -5,14 +5,27 @@ public class Stop {
     //private final int geolocation;
     //private final int oneBusAwayID;
 
-    private class Pair <Bus, Integer> {
-        public final Bus bus;
-        public final Integer time;
+    public class Pair <Bus, Integer> {
+        public Bus bus;
+        public Integer time;
+        public Pair(){
+            this.bus = null;
+            this.time = null;
+        }
         public Pair(Bus bus, Integer time){
             this.bus = bus;
             this.time = time;
         }
+
+        public void setBus(Bus b){
+            this.bus = b;
+        }
+
+        public void setTime(Integer t){
+            this.time = t;
+        }
     }
+
 
     private class PairComparator implements Comparator<Pair<Bus, Integer>>{
         public int compare(Pair<Bus, Integer> pair1, Pair<Bus, Integer> pair2) {
