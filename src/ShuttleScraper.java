@@ -27,6 +27,7 @@ public class ShuttleScraper{
         Document doc = Jsoup.connect(mainPage).get();
         Elements busLink = doc.select("a[href]");
         ArrayList<String> routeLinks = new ArrayList<String>();
+        ArrayList<String> tagList = new ArrayList<String>();
 
         //Parses all individual route links from the UCSDBus main page
         for(int index = 0; index < busLink.size(); index++){
@@ -46,20 +47,23 @@ public class ShuttleScraper{
 
             //Parses individual stop links from HTML
             for(int i = 0; i < stopLink.size(); i++){
+
                 String[] parser = stopLink.eq(i).toString().split("\"");
+                String[] tagParse = parser[2].split("[<>]");
                 if(i == 0){
                     //Do nothing because this link takes you back to route list
                 }
                 else{
                     String[] parsed = parser[1].split("/");
                     stopList.add("/" + parsed[5]);
+                    tagList.add(tagParse[1]);
                 }
             }
 
-            Bus newBus = new Bus();
-            Boolean addBus = false;
             //Combines stop links and scrapes info from the pages
             for(int i = 0; i < stopList.size(); i++){
+                Bus newBus = new Bus(tagList.get(i));
+                Boolean addBus = false;
                 String fullStopLink = fullLink + stopList.get(i);
                 doc = Jsoup.connect(fullStopLink).get();
                 Elements listElements = doc.getElementsByTag("li");
@@ -106,7 +110,7 @@ public class ShuttleScraper{
             for(int i = 0; i < stops.size(); i++){
                 Stop stop = stops.get(i);
                 Pair<Bus, Integer> pair = stop.getArrival();
-                System.out.println("Bus will arrive in: " + pair.time + " minutes.");
+                System.out.println("Bus will arrive at " + bus.getTag() + " in: " + pair.time + " minutes.");
             }
         }
     }
